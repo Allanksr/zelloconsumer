@@ -10,10 +10,12 @@ Then...
 
 ```
 const zelloconsumer = require('zelloconsumer')
-zelloconsumer({
-    issuer: 'issuer',
-    privatekey: 'privatekey'
-})
+
+ zelloconsumer.zelloconsumer({
+    issuer: 'path/issuer.txt',
+    private: 'path/private.json'
+}).then(token =>  console.log('token', `${token['response']}`))
+.catch(error =>  console.log('token', `${error['error']}`))
 ```
 ## Options
 
