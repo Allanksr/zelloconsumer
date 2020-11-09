@@ -1,6 +1,6 @@
 {
   "name": "zelloconsumer",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Instantiate Zello Consumer Easily",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/Allanksr/zelloconsumer/issues"
   },
-  "homepage": "https://github.com/Allanksr/zelloconsumer#readme"
+  "homepage": "https://github.com/Allanksr/zelloconsumer#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1"
+  }
 }

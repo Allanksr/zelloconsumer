@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+    <style>
+        body {
+            border: 0;
+            margin: 0;
+            padding: 0;
+            padding-left: 2px;
+        }
+    </style>
+    <script src="https://zello.io/sdks/js/latest/zcc.sdk.js"></script>
+
+    <button id="start">START</button>
+    <script>
+      var start = document.getElementById('start')
+      start.addEventListener('click', function() {
+            var context = new AudioContext()
+            connect()
+           })
+
+
+      var session = null
+      var widget = null
+     
+
+        function connect(){
+          ZCC.Sdk.init({
+          player: true,
+          recorder: false,
+          encoder: false,
+          widget: true
+        })
+        .then(function() {
+
+          widget = new ZCC.Widget({
+            headless: false,
+            element: document.getElementById('player')
+          })
+
+          session = new ZCC.Session({
+            serverUrl: 'wss://zello.io/ws/',
+            channel: 'Informação',
+            authToken: '<%- token %>',
+            listen_only: true
+          })
+
+          widget.setSession(session)
+
+
+          session.on(ZCC.Constants.EVENT_INCOMING_VOICE_DID_START, function(voice_did_start) {
+            console.log('voice_did_start :', voice_did_start)
+          }) 
+
+          session.on(ZCC.Constants.EVENT_INCOMING_VOICE_DID_STOP, function(voice_did_stop) {
+            console.log('voice_did_stop :', voice_did_stop)
+          }) 
+          
+          session.on(ZCC.Constants.EVENT_INCOMING_TEXT_MESSAGE, function(text_message) {
+            console.log('text_message :', text_message)
+          })
+
+        console.log('zcc :', ZCC)
+
+          return session.connect()
+        })
+        .then(function() {
+          console.log('connected')
+        })
+        .catch(function(err) {
+            console.warn(err)
+        })
+        }
+
+     
+    </script>
+</head>
+<body>
+<div id="player">
+
+  <h1>Welcome to Zello Widget</h1>
+  
+</div>
+</body>
+</html>

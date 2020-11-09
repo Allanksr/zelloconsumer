@@ -1,23 +1,35 @@
 const fs = require('fs')
- TokenManager = require('./tk')
-    function zelloconsumer(args0){
-        var issuer = args0['issuer']
-        var private = args0['private']
-        return new Promise( (resolve, reject) => {
-            fs.readFile(issuer,  (err, issuer) =>{
-                if(!err){
-                    fs.readFile(private,  (err, private) =>{
-                        if(!err){
-                            var token = TokenManager.createJwt(`${issuer}`, private)
-                            resolve({response: token})
-                        }else{
-                            reject({error: err})
-                        }                  
-                    })
+ 
+    var widget = false
+    class ZelloConsumer {
+        static call(args0){
+            var issuer = args0['issuer']
+            var privateKey = args0['private']
+            widget = args0['widget']
+            return new Promise( (resolve, reject) => {
+                fs.readFile(issuer,  (err, issuer) =>{
+                    if(!err){
+                        fs.readFile(privateKey,  (err, privateKey) =>{
+                            if(!err){
+                                var token = require('./tk').createJwt(`${issuer}`, privateKey)                           
+                                resolve({response: token})   
+                            }else{
+                                reject({error: err})
+                            }                  
+                        })
+                    }else{
+                        reject({error: err})
+                    }          
+            })      
+            }).then(token =>  widgetCall(token))
+            async function widgetCall(token){
+                if(widget){
+                    return  require('zelloconsumer/widget').widget({jwt : token['response']})
                 }else{
-                    reject({error: err})
-                }          
-        })      
-        }).then(token =>  token )
+                    return{port: `token was created > ${token['response']}`}
+                }             
+            }
+        }
+
     }
-module.exports.zelloconsumer = zelloconsumer
+module.exports = ZelloConsumer
