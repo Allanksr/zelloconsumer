@@ -12,11 +12,12 @@ in your index.js file
 ```
 const zelloconsumer = require('zelloconsumer')
 
- zelloconsumer.zelloconsumer({
-    issuer: 'path/issuer.txt',
-    private: 'path/private.json'
-}).then(token =>  console.log('token', `${token['response']}`))
-.catch(error =>  console.log('token', `${error['error']}`))
+zelloconsumer.call({
+        issuer: 'path/issuerKey.txt',
+        private: 'path/privateKey.json',
+        widget: true
+    }).then(port =>  console.log(`${port['port']}`))
+    .catch(error =>  console.log(`${error['error']}`))
 ```
 ## Options
 
