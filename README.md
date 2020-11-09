@@ -5,7 +5,7 @@ Instantiate Zello Consumer Easily
 # Installation
 
 `npm i zelloconsumer --save`
-
+[![Dependency ejs](https://gist.githubusercontent.com/Allanksr/0462f5527dff6591b78a93f7bdb9ee5b/raw/48a73c13eb971bad32a2de0b46b98c8b91598c57/ejs.svg)
 Then...
 
 in your index.js file
